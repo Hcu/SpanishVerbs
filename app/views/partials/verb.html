@@ -1,0 +1,47 @@
+<div ng-include="'partials/navbar'"></div>
+
+<div class="container">
+    <div class="page-header">
+        <h1>{{v.verb}}</h1>
+        <p><i>{{v.meaning}}</i></p>
+      
+    </div>
+      
+      
+      <div class="header">
+          <ul id="tensetabs" class="nav nav-tabs"> 
+            <li ng-repeat="t in v.tenses" ng-class="{active: $first}">
+                <a data-toggle="tab" target="_self" href="#{{v.verb}}{{t.name}}">{{t.name}}</a>
+            </li>
+            
+          </ul>
+      </div>
+      
+      <div class="tab-content">
+          <div class="tab-pane" id="{{v.verb}}{{t.name}}" ng-repeat="t in v.tenses" ng-class="{active: $first}">
+             <div class="container">
+             <ul class="tense">
+                <li>Yo <strong>{{t.yo}}</strong></li>
+                <li>Tú <strong>{{t.tu}}</strong></li>
+                <li>Ud., él, ella <strong>{{t.el}}</strong></li>
+                <li>Nosotros/as <strong>{{t.nosotros}}</strong></li>
+                <li>Vosotros/as <strong>{{t.vosotros}}</strong></li>
+                <li>Uds., ellos, ellas <strong>{{t.ustedes}}</strong></li>
+            </ul>
+            </div>
+          </div>
+       </div>
+    <div>
+    <ul class="pager">
+      <li><a href="/verb/{{previousVerb}}" ng-show="hasPrevious">Previous</a></li>
+      <li><a href="/verb/{{nextVerb}}" ng-show="hasNext">Next</a></li>
+    </ul>
+   <!--  <button class="btn btn-sm btn-success" >previous</button>
+    <button class="btn btn-sm btn-success" >next</button> -->
+    </div>
+  
+</div>
+
+<div class="footer">
+  <p>you will ♥ spanish</p>
+</div>

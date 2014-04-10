@@ -1,0 +1,154 @@
+<div ng-include="'partials/navbar'"></div>
+
+<div class="container">
+  <div class="page-header">
+    <h1>New spanish verb</h1>
+  </div>
+  <p class="lead">
+    <form class="form-horizontal" name="verbForm">
+            <div class="form-group">
+                    <label class="col-sm-2 control-label" for="verb">Verb</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" ng-model="verb.verb" name="verb" type="text" required></input>
+                    </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="meaning">Meaning</label>
+                <div class="col-sm-10">
+                    <input class="form-control" ng-model="verb.meaning" name="meaning" type="text"></input>
+                </div>
+            </div>
+        <div class="alert alert-warning" ng-show='!verbForm.$valid'>
+            <strong>Info!</strong> You can only add tenses once you have entered a verb.
+            You add a tense by clicking the <span class="glyphicon glyphicon-plus"></span> icon.
+        </div>
+        
+        <div class="alert alert-warning" ng-show='!isVerbValid()'>
+            <strong>Remember!</strong> A spanish verb must end in -ar/-er/-ir or -arse/-erse/-irse.
+        </div>
+                
+        <div class="header">
+          <ul id="tensetabs" class="nav nav-tabs"> 
+            <li ng-repeat="t in verb.tenses">
+                <!-- <div class="btn-group"> -->
+                    <a data-toggle="tab" target="_self" href="#{{t.name}}">{{t.name}}</a>
+                    <!-- <a class="btn btn-xs"><span class="glyphicon glyphicon-edit"></span></a> -->
+                <!-- </div> -->
+            </li>
+            <li>
+                <a class="btn" ng-disabled='!isVerbValid()' data-toggle="modal" data-target=".bs-example-modal-sm"><span class="glyphicon glyphicon-plus"></span>add tense</a>
+            </li>
+            
+          </ul>
+        </div>
+      
+      <div class="tab-content">
+          <div class="tab-pane" id="{{t.name}}" ng-repeat="t in verb.tenses">
+             <ul class="tense">
+                <li>Yo <strong>{{t.yo}}</strong></li>
+                <li>Tú <strong>{{t.tu}}</strong></li>
+                <li>Ud., él, ella <strong>{{t.el}}</strong></li>
+                <li>Nosotros/as <strong>{{t.nosotros}}</strong></li>
+                <li>Vosotros/as <strong>{{t.vosotros}}</strong></li>
+                <li>Uds., ellos, ellas <strong>{{t.ustedes}}</strong></li>
+            </ul>
+            
+          </div>
+          
+          <div class="tab-pane" id="newtense">
+            
+          </div>
+          
+       </div>
+       <button class="btn btn-lg btn-success" type="submit" ng-click="saveVerb()">Save verb</button>
+    </form>
+    
+    
+       <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+               <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">New tense</h4>
+               </div>
+               <div class="modal-body">
+                <form role="form" class="form-horizontal">
+                    <div class="form-group">
+                    <label class="col-sm-2 control-label" for="name">Type</label>
+                    <div class="col-sm-10">
+                    <select class="form-control" ng-model="verb.newtense.name" name="name">
+                        <option>Present</option>
+                        <option>Preterite</option>
+                        <option>Imperfecto</option>
+                        <option>Futuro</option>
+                    </select>
+                    </div>
+               </div>
+                   
+                        
+                    <div class="form-group" ng-show="verb.newtense.name">
+                        <label class="col-sm-2 control-label" for="regular">Is regular?</label>
+                        <div class="col-sm-10">
+                        <input name="regular" ng-model="isRegular" ng-change="fillRegular()" type="checkbox"/>
+                        </div>
+               </div>
+                    <div class="form-group">
+                        
+                    <label class="col-sm-2 control-label" for="yo">Yo</label>
+                    <div class="col-sm-10">
+                    <input class="form-control" ng-model="verb.newtense.yo" name="yo" type="text"></input>
+                    </div>
+               </div>
+                    
+                    
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label" for="tu">Tu</label>
+                        <div class="col-sm-10">
+                        <input class="form-control" ng-model="verb.newtense.tu" name="tu" type="text"></input>
+                        </div>
+                </div>
+                
+                    
+                    <div class="form-group">
+                    <label class="col-sm-2 control-label" for="usted">Ud/El</label>
+                    <div class="col-sm-10">
+                    <input class="form-control" ng-model="verb.newtense.el" name="usted" type="text"></input>
+                    </div>
+                </div>
+                    
+                    <div class="form-group">
+                    <label class="col-sm-2 control-label" for="nosotros">Nosotros</label>
+                    <div class="col-sm-10">
+                    <input class="form-control" ng-model="verb.newtense.nosotros" name="nosotros" type="text"></input>
+                    </div>
+                </div>
+                    <div class="form-group">
+                    <label class="col-sm-2 control-label" for="vosotros">Vosotros</label>
+                    <div class="col-sm-10">
+                    <input class="form-control" ng-model="verb.newtense.vosotros" name="vosotros" type="text"></input>
+                    </div>
+                </div>
+                
+                    <div class="form-group">
+                    <label class="col-sm-2 control-label" for="ustedes">Uds/Ellos</label>
+                    <div class="col-sm-10">
+                    <input class="form-control" ng-model="verb.newtense.ustedes" name="ustedes" type="text"></input>
+                    </div>
+                </div>
+                    
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-2">
+                    <button class="btn btn-lg btn-success" type="submit" data-dismiss="modal" ng-click="saveTense()">Add Tense</button>
+                    </div>
+                </form>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+  </p>
+  
+</div>
+<div class="footer">
+  <p>Happy studying!!</p>
+</div>

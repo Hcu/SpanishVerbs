@@ -1,0 +1,14 @@
+<div ng-include="'partials/navbar'"></div>
+
+<div class="container">
+    <div ng-repeat="v in verbs" class="page-header">
+        <h1><a class="btn btn-lg btn-link" href="/verb/{{v.verb}}">{{v.verb}}</a></h1>
+        <p><i>{{v.meaning}}</i></p>
+      
+    </div>
+      
+</div>
+
+<div class="footer">
+  <p>you will ♥ spanish</p>
+</div>

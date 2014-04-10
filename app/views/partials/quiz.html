@@ -1,0 +1,110 @@
+<div ng-include="'partials/navbar'"></div>
+
+<div class="container">
+    <div class="page-header">
+        <h1>Quiz</h1>
+    </div>
+    
+    <div class="alert alert-info" ng-show='!isQuizStarted'>
+        <p>This quiz will test your knowledge of the different tenses in Spanish.</p>
+        <p>Which tenses would you like to test?</p>
+        <form role="form" class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" ng-model="quiz.all" ng-click="toggleAllTenses()"> All
+                    </label>
+                  </div>
+                </div>
+              </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" ng-model="quiz.present"> Present
+                    </label>
+                  </div>
+                </div>
+              </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" ng-model="quiz.preterite"> Preterite
+                    </label>
+                  </div>
+                </div>
+              </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" ng-model="quiz.futuro"> Futuro
+                    </label>
+                  </div>
+                </div>
+              </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" ng-model="quiz.imperfect"> Imperfect
+                    </label>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="control-label" for="questioncount">How many questions?</label>
+                <input class="form-control" name="questioncount" ng-model="questionCount" type="number"/>
+              </div>
+        </form>
+       <p>Good luck!</p>
+        <p><button  class="btn btn-primary" ng-click="startQuiz()">Start!</button></p>
+    </div>
+    
+    <div ng-show='isQuizStarted && !isQuizFinished'>
+        <p>The <strong>{{question.tense}}</strong> tense for the verb <strong>{{question.verb}}</strong></p>
+        <form role="form" class="form-horizontal" ng-submit='storeAnswerAndProceed()'>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="answer">{{question.person}}</label>
+            <div class="col-sm-10">
+                <input class="form-control" ng-model='question.answer' type="text"/>
+            </div>
+        </div>
+        <ul class="pager">
+          <li><a ng-click="storeAnswerAndProceed()">Next</a></li>
+        </ul>
+        </form>
+    </div>
+    
+    <div ng-show='isQuizFinished'>
+        <div class="row">
+        <div class="col-md-8">
+            <ul class="tense">
+                <li ng-repeat='a in answers'>
+                    <div class="alert" ng-class="{'alert-danger': !a.correct(), 'alert-success': a.correct()}">
+                        <p ng-show="a.correct()"><span class="glyphicon glyphicon-ok"></span>&nbsp;The <strong>{{a.tense}}</strong> of the verb <strong>{{a.verb}}</strong> in the {{a.person}}-form is indeed <strong>{{a.correctAnswer}}</strong></p>
+                        <p ng-show='!a.correct()'><span class="glyphicon glyphicon-remove"></span>&nbsp;The The <strong>{{a.tense}}</strong> of the verb <strong>{{a.verb}}</strong> in the {{a.person}}-form is not {{a.answer}}, but <strong>{{a.correctAnswer}}</strong></p>
+                    </div>
+                </li>
+                        
+            </ul>
+        </div>
+        <div class='col-md-3'>
+            <h1>{{quizScore}}/{{quizTotal}}<h1>
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn btn-primary" ng-click="startQuiz()">Try again!</button>
+            </div>
+        </div>
+    </div>
+      
+</div>
+
+<div class="footer">
+  <p>you will ♥ spanish</p>
+</div>
